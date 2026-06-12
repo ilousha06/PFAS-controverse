@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PFAS : Scandale Sanitaire ou Surmédia — Analyse de la controverse des polluants éternels. Projet universitaire ESIEE Paris par Ilyas Damiri et Gaspard Damame.">
+  <meta name="keywords" content="PFAS, polluants éternels, controverse, santé, environnement, ESIEE Paris, pollution chimique">
+  <meta name="author" content="Ilyas Damiri, Gaspard Damame — ESIEE Paris">
+  <meta property="og:title" content="PFAS : Scandale ou Surmédia — ESIEE Paris">
+  <meta property="og:description" content="Faut-il interdire les polluants éternels avant qu'il ne soit trop tard ? Analyse critique de la controverse.">
+  <meta property="og:type" content="website">
+  <title>PFAS : Scandale ou Surmédia | ESIEE Paris — Les Totally Spies</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Canvas particules fond -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-molecule">
+        <div class="mol-center"></div>
+        <div class="mol-orbit mol-o1"><div class="mol-atom"></div></div>
+        <div class="mol-orbit mol-o2"><div class="mol-atom"></div></div>
+        <div class="mol-orbit mol-o3"><div class="mol-atom"></div></div>
+      </div>
+      <div class="loader-title">PFAS</div>
+      <div class="loader-sub">Chargement de l'analyse...</div>
+      <div class="loader-bar-wrap"><div class="loader-bar-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- Couches parallaxe globales (visibles sur tout le site) -->
+  <div class="px-layer" aria-hidden="true">
+    <div class="px-blob px-b1" data-px="0.10"></div>
+    <div class="px-blob px-b2" data-px="-0.14"></div>
+    <div class="px-blob px-b3" data-px="0.22"></div>
+    <div class="px-blob px-b4" data-px="-0.08"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="navbar" role="navigation" aria-label="Navigation principale">
+    <div class="nav-wrap">
+      <a href="#accueil" class="nav-logo" aria-label="Accueil">
+        <span class="nl-pfas">PFAS</span>
+        <span class="nl-sep">|</span>
+        <span class="nl-sub">Controverse</span>
+      </a>
+      <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"
+        onclick="(function(b){var m=document.getElementById('navLinks');var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));document.body.style.overflow=o?'hidden':'';})(this)">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks" role="menubar">
+        <li role="none"><a href="#accueil"      class="nl active" role="menuitem"><i class="fas fa-home"></i>Accueil</a></li>
+        <li role="none"><a href="#introduction" class="nl"        role="menuitem"><i class="fas fa-book-open"></i>Introduction</a></li>
+        <li role="none"><a href="#historique"   class="nl"        role="menuitem"><i class="fas fa-clock"></i>Historique</a></li>
+        <li role="none"><a href="#acteurs"      class="nl"        role="menuitem"><i class="fas fa-users"></i>Acteurs</a></li>
+        <li role="none" class="has-sub">
+          <a href="#arguments-pour" class="nl" role="menuitem"><i class="fas fa-balance-scale"></i>Arguments <i class="fas fa-chevron-down fa-xs"></i></a>
+          <ul class="subnav">
+            <li><a href="#arguments-pour"><i class="fas fa-check-circle"></i>&nbsp;Pour l'interdiction</a></li>
+            <li><a href="#arguments-contre"><i class="fas fa-times-circle"></i>&nbsp;Pour les exemptions</a></li>
+          </ul>
+        </li>
+        <li role="none"><a href="#donnees"      class="nl"        role="menuitem"><i class="fas fa-chart-bar"></i>Données</a></li>
+        <li role="none"><a href="#bilan"        class="nl"        role="menuitem"><i class="fas fa-flag-checkered"></i>Bilan</a></li>
+        <li role="none"><a href="#equipe"       class="nl"        role="menuitem"><i class="fas fa-user-graduate"></i>Équipe</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <section id="accueil" class="hero" aria-label="Page d'accueil">
+    <!-- Image de fond avec Ken Burns — parallax géré en JS -->
+    <div class="hero-bg-wrap" aria-hidden="true">
+      <div class="hero-bg-img"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <!-- Couches de brume atmosphérique animées -->
+    <div class="hero-fog" aria-hidden="true">
+      <div class="fog-layer fog-1"></div>
+      <div class="fog-layer fog-2"></div>
+      <div class="fog-layer fog-3"></div>
+    </div>
+    <!-- Reflet d'eau en bas -->
+    <div class="hero-water" aria-hidden="true"></div>
+    <div class="hero-body">
+      <div class="hero-badge reveal-up">
+        <i class="fas fa-graduation-cap"></i>&nbsp; Projet Universitaire · ESIEE Paris · 2024–2025
+      </div>
+      <h1 class="hero-title">
+        <span class="ht-script reveal-up" style="--d:0.15s">PFAS</span>
+        <span class="ht-block reveal-up" style="--d:0.30s">SCANDALE</span>
+        <span class="ht-ou  reveal-up" style="--d:0.50s">— ou —</span>
+        <span class="ht-block reveal-up" style="--d:0.65s">SURMÉDIA</span>
+      </h1>
+      <p class="hero-question reveal-up" style="--d:0.6s">
+        Faut-il interdire les « polluants éternels » avant qu'il ne soit trop tard ?
+      </p>
+      <p class="hero-desc reveal-up" style="--d:0.7s">
+        Une analyse critique de la controverse des substances per- et polyfluoroalkylées,<br>
+        entre urgence sanitaire et réalité économique.
+      </p>
+      <div class="hero-cta reveal-up" style="--d:0.8s">
+        <a href="#introduction" class="btn-primary">
+          Explorer l'analyse&nbsp;<i class="fas fa-arrow-down"></i>
+        </a>
+        <a href="#donnees" class="btn-ghost">
+          Voir les données&nbsp;<i class="fas fa-chart-bar"></i>
+        </a>
+      </div>
+      <div class="hero-chips reveal-up" style="--d:0.9s">
+        <span class="chip"><i class="fas fa-user"></i>&nbsp;Ilyas Damiri</span>
+        <span class="chip"><i class="fas fa-user"></i>&nbsp;Gaspard Damame</span>
+        <span class="chip team-chip"><i class="fas fa-mask"></i>&nbsp;Les Totally Spies</span>
+      </div>
+    </div>
+    <a href="#introduction" class="hero-scroll" aria-label="Défiler vers le bas">
+      <div class="scroll-icon"><i class="fas fa-chevron-down"></i></div>
+      <span>Défiler</span>
+    </a>
+  </section>
+
+  <!-- ===================== STATS BAR ===================== -->
+  <section class="stats-bar" aria-label="Chiffres clés">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat reveal-up">
+          <div class="stat-val"><span class="counter" data-to="10000">10 000</span><span class="stat-sym">+</span></div>
+          <div class="stat-lbl">Substances PFAS identifiées</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat reveal-up" style="--d:0.1s">
+          <div class="stat-val"><span class="counter" data-to="97">97</span><span class="stat-sym">%</span></div>
+          <div class="stat-lbl">des Européens contaminés</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat reveal-up" style="--d:0.2s">
+          <div class="stat-val"><span class="counter" data-to="70">70</span><span class="stat-sym">+</span></div>
+          <div class="stat-lbl">ans d'utilisation industrielle</div>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="stat reveal-up" style="--d:0.3s">
+          <div class="stat-val"><span class="counter" data-to="2023">2023</span></div>
+          <div class="stat-lbl">Proposition d'interdiction EU</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTRODUCTION ===================== -->
+  <section id="introduction" class="section" aria-labelledby="intro-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Introduction</div>
+        <h2 id="intro-h" class="sec-title">PFAS : Scandale Sanitaire en Devenir<br>ou Alerte Exagérée ?</h2>
+        <div class="sec-line"></div>
+      </header>
+
+      <div class="cards-2x2">
+        <article class="glass-card reveal-up" style="--d:0.0s">
+          <div class="gc-icon" style="color:#C9841A"><i class="fas fa-question-circle"></i></div>
+          <h3>Pourquoi ce sujet ?</h3>
+          <p>En tant qu'étudiants en ingénierie, nous nous intéressons aux innovations qui améliorent le quotidien, tout en étant conscients de leurs impacts potentiels. Le sujet des PFAS nous a interpellés car il illustre parfaitement cette dualité : une avancée technologique utile, mais qui soulève aujourd'hui des enjeux sanitaires et environnementaux majeurs.</p>
+        </article>
+        <article class="glass-card reveal-up" style="--d:0.1s">
+          <div class="gc-icon" style="color:#3498DB"><i class="fas fa-users-cog"></i></div>
+          <h3>Notre démarche</h3>
+          <p>Nous avons adopté une démarche rigoureuse, analysant la controverse avec un esprit critique en identifiant les acteurs, les arguments et les enjeux. Chaque membre du groupe avait une partie à traiter, ce qui a permis une bonne organisation et une synthèse claire des informations.</p>
+        </article>
+        <article class="glass-card reveal-up" style="--d:0.2s">
+          <div class="gc-icon" style="color:#2ECC71"><i class="fas fa-lightbulb"></i></div>
+          <h3>Ce que nous avons appris</h3>
+          <p>Nous avons découvert que les PFAS ne sont pas seulement un problème scientifique, mais aussi un enjeu sociétal majeur. Ce travail nous a permis de développer notre esprit critique, notamment face aux sources d'information, et de comprendre l'importance de confronter plusieurs arguments pour construire une analyse équilibrée.</p>
+        </article>
+        <article class="glass-card reveal-up" style="--d:0.3s">
+          <div class="gc-icon" style="color:#9B59B6"><i class="fas fa-road"></i></div>
+          <h3>Perspectives</h3>
+          <p>Si nous avions eu plus de temps, nous aurions voulu approfondir les alternatives aux PFAS et les solutions techniques de dépollution, et échanger avec des experts directement concernés. Ce sujet soulève des questions fondamentales sur la gestion des innovations technologiques et leurs conséquences à long terme.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTROVERSE ===================== -->
+  <section id="controverse" class="section section-alt" aria-labelledby="ct-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">La Controverse</div>
+        <h2 id="ct-h" class="sec-title">Introduction de la Controverse</h2>
+        <div class="sec-line"></div>
+      </header>
+
+      <div class="ct-layout">
+        <div class="ct-text reveal-up">
+          <p class="lead">À partir des années 2010, les PFAS, longtemps considérés comme une innovation utile, deviennent progressivement un sujet d'inquiétude. Leur présence généralisée dans l'environnement et dans le corps humain est mise en évidence par de nombreuses études scientifiques.</p>
+          <p>Ces substances, utilisées dans de nombreux produits du quotidien pour leurs propriétés résistantes, posent un défi majeur : elles sont extrêmement persistantes et s'accumulent dans les écosystèmes comme dans l'organisme humain. Certaines études établissent des liens entre l'exposition aux PFAS et des cancers ou des troubles hormonaux.</p>
+          <p>La controverse naît d'un désaccord profond entre différents acteurs sur la manière de gérer cette situation. Scientifiques et ONG estiment qu'il est nécessaire d'agir rapidement. Les industriels défendent l'utilité des PFAS et mettent en avant les conséquences économiques d'une interdiction globale.</p>
+        </div>
+
+        <div class="ct-question reveal-up" style="--d:0.2s">
+          <div class="cq-box glass-card">
+            <i class="fas fa-balance-scale cq-icon"></i>
+            <h3>La Question Centrale</h3>
+            <p>Faut-il <strong>interdire les PFAS</strong> pour protéger la santé et l'environnement, ou <strong>encadrer leur utilisation</strong> afin de préserver les activités économiques ?</p>
+          </div>
+        </div>
+
+        <div class="ct-versus reveal-up" style="--d:0.3s">
+          <div class="ctv-side ctv-for">
+            <div class="ctv-head"><i class="fas fa-check-circle"></i><h4>Camp de l'interdiction</h4></div>
+            <ul>
+              <li><i class="fas fa-angle-right"></i> Scientifiques &amp; chercheurs</li>
+              <li><i class="fas fa-angle-right"></i> ONG environnementales</li>
+              <li><i class="fas fa-angle-right"></i> Agences sanitaires (ANSES, ECHA)</li>
+              <li><i class="fas fa-angle-right"></i> Responsables politiques</li>
+            </ul>
+            <div class="ctv-arg">Urgence sanitaire — principe de précaution</div>
+          </div>
+          <div class="ctv-vs">VS</div>
+          <div class="ctv-side ctv-against">
+            <div class="ctv-head"><i class="fas fa-times-circle"></i><h4>Camp des exemptions</h4></div>
+            <ul>
+              <li><i class="fas fa-angle-right"></i> Industriels chimiques</li>
+              <li><i class="fas fa-angle-right"></i> Lobbys sectoriels</li>
+              <li><i class="fas fa-angle-right"></i> Industries utilisatrices</li>
+              <li><i class="fas fa-angle-right"></i> Gouvernements (prudence)</li>
+            </ul>
+            <div class="ctv-arg">Utilité économique — absence d'alternatives</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TERMINOLOGIE ===================== -->
+  <section id="terminologie" class="section" aria-labelledby="term-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Terminologie</div>
+        <h2 id="term-h" class="sec-title">Comprendre les Termes Clés</h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">Afin de mieux comprendre la controverse des PFAS, voici les définitions essentielles.</p>
+      </header>
+
+      <div class="terms-grid">
+        <div class="term-card glass-card reveal-up" style="--d:0.00s"><div class="tc-ico"><i class="fas fa-flask"></i></div><h4>PFAS</h4><p>Substances per- et polyfluoroalkylées — plus de 10 000 substances chimiques synthétiques (PFOS, PFOA…) contenant du fluor, résistantes à l'eau, la chaleur et les graisses.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.05s"><div class="tc-ico"><i class="fas fa-infinity"></i></div><h4>Polluants éternels</h4><p>Nom donné aux PFAS en raison de leur très grande persistance dans l'environnement. Ils ne se dégradent presque pas naturellement.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.10s"><div class="tc-ico"><i class="fas fa-dna"></i></div><h4>Bioaccumulation</h4><p>Processus par lequel une substance s'accumule progressivement dans un organisme vivant, notamment dans le sang et les tissus.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.15s"><div class="tc-ico"><i class="fas fa-heartbeat"></i></div><h4>Perturbateurs endocriniens</h4><p>Substances capables de perturber le système hormonal, pouvant entraîner des effets importants sur la santé humaine.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.20s"><div class="tc-ico"><i class="fas fa-shield-alt"></i></div><h4>Principe de précaution</h4><p>Principe selon lequel il faut agir pour prévenir un risque potentiel, même en l'absence de certitude scientifique complète.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.25s"><div class="tc-ico"><i class="fas fa-exchange-alt"></i></div><h4>Substitution regrettable</h4><p>Remplacement d'une substance interdite par une autre similaire, souvent tout aussi dangereuse mais moins réglementée.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.30s"><div class="tc-ico"><i class="fas fa-clock"></i></div><h4>Exposition chronique</h4><p>Exposition à faible dose mais sur une longue durée, aux effets qui se cumulent progressivement.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.35s"><div class="tc-ico"><i class="fas fa-fish"></i></div><h4>Biomagnification</h4><p>Augmentation de la concentration d'une substance toxique le long de la chaîne alimentaire.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.40s"><div class="tc-ico"><i class="fas fa-leaf"></i></div><h4>Écotoxicité</h4><p>Impact d'une substance sur les écosystèmes et les organismes vivants dans leur environnement naturel.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.45s"><div class="tc-ico"><i class="fas fa-tint"></i></div><h4>Nappes phréatiques</h4><p>Réserves d'eau souterraines pouvant être contaminées par les PFAS via infiltration depuis les sols pollués.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.50s"><div class="tc-ico"><i class="fas fa-star"></i></div><h4>Usage essentiel</h4><p>Utilisation considérée comme indispensable dans certains secteurs stratégiques (médical, industriel, défense).</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.55s"><div class="tc-ico"><i class="fas fa-euro-sign"></i></div><h4>Pollueur-payeur</h4><p>Principe selon lequel le responsable de la pollution doit financer les coûts de dépollution et de réparation.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.60s"><div class="tc-ico"><i class="fas fa-ruler"></i></div><h4>Seuil sanitaire</h4><p>Limite de concentration d'une substance dans l'environnement ou dans le corps humain considérée acceptable pour la santé.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.65s"><div class="tc-ico"><i class="fas fa-file-contract"></i></div><h4>Réglementation</h4><p>Ensemble des lois et normes mises en place par les autorités pour encadrer l'utilisation des substances chimiques.</p></div>
+        <div class="term-card glass-card reveal-up" style="--d:0.70s"><div class="tc-ico"><i class="fas fa-lungs"></i></div><h4>Exposition</h4><p>Contact entre une substance chimique et un organisme par ingestion, inhalation ou contact cutané.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HISTORIQUE ===================== -->
+  <section id="historique" class="section section-alt" aria-labelledby="hist-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Historique</div>
+        <h2 id="hist-h" class="sec-title">Chronologie des PFAS</h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">De l'innovation industrielle au scandale sanitaire — 75 ans de controverse.</p>
+      </header>
+
+      <div class="timeline" role="list">
+
+        <div class="tl-item tl-right reveal-up" role="listitem">
+          <div class="tl-dot" style="--c:#2ECC71"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">1950</div>
+            <div class="tl-badge" style="--bc:#2ECC71">Début industriel</div>
+            <h4>L'ère des PFAS commence</h4>
+            <p>Les PFAS entrent dans une phase de développement industriel massif. Largement utilisés pour leurs propriétés exceptionnelles (antiadhésives, imperméables, résistantes à la chaleur) dans les poêles, textiles et mousses anti-incendie. La priorité est à l'innovation, les risques sanitaires sont alors peu connus.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-left reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#F39C12"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">1970</div>
+            <div class="tl-badge" style="--bc:#F39C12">Premiers signaux</div>
+            <h4>Alertes internes cachées</h4>
+            <p>Les premières études internes à certaines entreprises chimiques révèlent des effets toxiques sur les animaux et des risques pour la santé humaine. Ces informations restent confidentielles, retardant la prise de conscience du danger.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-right reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#E74C3C"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">1998</div>
+            <div class="tl-badge" style="--bc:#E74C3C">Affaire DuPont</div>
+            <h4>Le tournant américain</h4>
+            <p>L'avocat Rob Bilott engage une action en justice pour contamination de l'eau au PFOA. Des documents internes révèlent que les industriels connaissaient les risques depuis longtemps, déclenchant une controverse mondiale et une méfiance croissante envers l'industrie chimique.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-left reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#9B59B6"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2009</div>
+            <div class="tl-badge" style="--bc:#9B59B6">Régulation internationale</div>
+            <h4>Convention de Stockholm</h4>
+            <p>Le PFOS est inscrit dans la Convention de Stockholm, marquant une première reconnaissance mondiale de sa dangerosité. Les PFAS sont progressivement reconnus comme des polluants persistants à l'échelle mondiale.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-right reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#E74C3C"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2010</div>
+            <div class="tl-badge" style="--bc:#E74C3C">Alertes scientifiques</div>
+            <h4>Contamination généralisée</h4>
+            <p>Des études montrent la présence généralisée des PFAS dans le sang humain. La controverse s'intensifie avec l'accumulation de preuves sur les effets sanitaires : cancers, perturbations hormonales, affaiblissement du système immunitaire.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-left reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#F39C12"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2015</div>
+            <div class="tl-badge" style="--bc:#F39C12">Premières restrictions</div>
+            <h4>Substitution regrettable</h4>
+            <p>Limitation du PFOA et du PFOS dans plusieurs pays, mais remplacement par d'autres PFAS — phénomène de substitution regrettable. Les campagnes de mesure confirment la contamination dans l'eau potable, les sols et l'air.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-right reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#C9841A"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2019</div>
+            <div class="tl-badge" style="--bc:#C9841A">Apogée controverse</div>
+            <h4>Enjeu mondial</h4>
+            <p>La question des PFAS atteint un niveau de visibilité mondial. Forte médiatisation du sujet et multiplication des études, ce qui fait entrer le débat dans l'espace public et interpelle les gouvernements du monde entier.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-left reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#1ABC9C"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2020</div>
+            <div class="tl-badge" style="--bc:#1ABC9C">Contrôles renforcés</div>
+            <h4>L'Europe réagit</h4>
+            <p>Mise en place de contrôles plus stricts sur la présence de PFAS dans l'eau potable en Europe. L'ECHA examine la possibilité d'une restriction globale pour éviter les phénomènes de substitution entre molécules.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-right reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#E74C3C"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2022</div>
+            <div class="tl-badge" style="--bc:#E74C3C">Déclenchement France</div>
+            <h4>La Vallée de la Chimie</h4>
+            <p>En mai 2022, des enquêtes journalistiques révèlent une contamination importante autour de la vallée de la chimie près de Lyon, notamment liée à des sites industriels comme Arkema. Prise de conscience nationale, plaintes d'élus et actions en justice des ONG.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-left reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#9B59B6"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2023</div>
+            <div class="tl-badge" style="--bc:#9B59B6">Tournant européen</div>
+            <h4>Proposition d'interdiction globale</h4>
+            <p>Le CIRC classe certains PFAS comme cancérogènes. Une proposition historique est déposée au niveau européen pour interdire l'ensemble des PFAS — un véritable changement de paradigme réglementaire sans précédent.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-right reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot" style="--c:#F39C12"></div>
+          <div class="tl-card glass-card">
+            <div class="tl-year">2024</div>
+            <div class="tl-badge" style="--bc:#F39C12">Conflit politique</div>
+            <h4>Compromis législatifs en France</h4>
+            <p>Débats à l'Assemblée nationale opposant enjeux sanitaires et économiques. La France adopte une loi visant à restreindre certains usages des PFAS, avec des compromis importants sous la pression des industriels, notamment l'exclusion des ustensiles de cuisine.</p>
+          </div>
+        </div>
+
+        <div class="tl-item tl-left tl-current reveal-up" style="--d:0.1s" role="listitem">
+          <div class="tl-dot tl-pulse" style="--c:#C9841A"></div>
+          <div class="tl-card glass-card tl-card-active">
+            <div class="tl-year">2025</div>
+            <div class="tl-badge" style="--bc:#C9841A">Situation actuelle</div>
+            <h4>La controverse reste vive</h4>
+            <p>Les réglementations continuent d'évoluer. Décisions attendues à l'échelle européenne. D'un côté, les acteurs sanitaires et environnementaux demandent une interdiction totale. De l'autre, les industriels défendent les usages essentiels et les enjeux d'emploi et de transition écologique.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ACTEURS ===================== -->
+  <section id="acteurs" class="section" aria-labelledby="act-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Acteurs &amp; Enjeux</div>
+        <h2 id="act-h" class="sec-title">Les Parties Prenantes</h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">La controverse mobilise de nombreux acteurs aux intérêts divergents.</p>
+      </header>
+
+      <div class="tabs-wrap reveal-up">
+        <div class="tabs-head" role="tablist">
+          <button class="tab-btn tab-active" role="tab" aria-selected="true"  data-tab="for"  aria-controls="tab-for"     onclick="switchTab('for')">
+            <i class="fas fa-check-circle"></i>&nbsp;Pour l'interdiction
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="against" aria-controls="tab-against" onclick="switchTab('against')">
+            <i class="fas fa-times-circle"></i>&nbsp;Pour les exemptions
+          </button>
+        </div>
+
+        <div id="tab-for" class="tab-panel tab-visible" role="tabpanel">
+          <div class="actors-grid">
+            <article class="actor-card glass-card reveal-up">
+              <div class="ac-icon ac-green"><i class="fas fa-tree"></i></div>
+              <h4>Générations Futures &amp; Notre Affaire à Tous</h4>
+              <div class="ac-role">ONG Environnementales</div>
+              <p>Ces ONG incarnent le camp de l'urgence sanitaire en militant pour une interdiction totale et immédiate des « polluants éternels » au nom du principe de précaution. Elles mènent des actions en justice offensives contre l'État pour inaction et les industriels pour mise en danger d'autrui.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Urgence sanitaire, santé publique</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.05s">
+              <div class="ac-icon ac-blue"><i class="fas fa-microscope"></i></div>
+              <h4>ANSES</h4>
+              <div class="ac-role">Agence Nationale de Sécurité Sanitaire</div>
+              <p>L'ANSES soutient indirectement une régulation stricte en mettant en évidence la présence généralisée des PFAS dans l'environnement et leurs risques potentiels. Elle recommande la mise en place de seuils stricts et des mesures de protection des populations.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Évaluation scientifique des risques</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.10s">
+              <div class="ac-icon ac-purple"><i class="fas fa-globe-europe"></i></div>
+              <h4>ECHA</h4>
+              <div class="ac-role">Agence Européenne des Produits Chimiques</div>
+              <p>L'ECHA examine la possibilité d'une restriction globale des PFAS afin d'éviter les phénomènes de substitution. Elle défend une approche globale pour protéger la santé publique et l'environnement tout en encadrant les usages essentiels.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Réglementation européenne</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.15s">
+              <div class="ac-icon ac-orange"><i class="fas fa-city"></i></div>
+              <h4>Maires et Collectivités Locales</h4>
+              <div class="ac-role">Élus Locaux Concernés</div>
+              <p>Concernés par la pollution autour des sites industriels, ils soutiennent des mesures strictes. Ils dénoncent la contamination de l'eau et défendent le principe pollueur-payeur pour éviter que les coûts de dépollution soient supportés par les citoyens.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Sanitaire, social et économique local</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.20s">
+              <div class="ac-icon ac-teal"><i class="fas fa-faucet"></i></div>
+              <h4>Régies d'Eau et Services Publics</h4>
+              <div class="ac-role">Gestionnaires de l'eau potable</div>
+              <p>Directement confrontés aux conséquences de la pollution aux PFAS, ils soutiennent une régulation forte en raison des coûts élevés de traitement de l'eau et des risques pour la santé des usagers.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Économique et sanitaire</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.25s">
+              <div class="ac-icon ac-red"><i class="fas fa-dna"></i></div>
+              <h4>CIRC et Chercheurs</h4>
+              <div class="ac-role">Institutions Scientifiques Internationales</div>
+              <p>Les chercheurs jouent un rôle clé en mettant en évidence les dangers de certains PFAS. Le CIRC a classé certains PFAS comme cancérogènes (novembre 2023), contribuant à alerter les décideurs publics.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Scientifique et sanitaire</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.30s">
+              <div class="ac-icon ac-green"><i class="fas fa-people-group"></i></div>
+              <h4>Citoyens et Associations Locales</h4>
+              <div class="ac-role">Population Concernée</div>
+              <p>Les populations exposées, notamment à proximité des sites industriels, soutiennent des mesures d'interdiction. Elles dénoncent les inégalités face à la pollution et les risques pour leur qualité de vie.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Santé publique, justice environnementale</div>
+            </article>
+          </div>
+        </div>
+
+        <div id="tab-against" class="tab-panel" role="tabpanel">
+          <div class="actors-grid">
+            <article class="actor-card glass-card reveal-up">
+              <div class="ac-icon ac-red"><i class="fas fa-industry"></i></div>
+              <h4>France Chimie &amp; CEFIC</h4>
+              <div class="ac-role">Lobbys de l'Industrie Chimique</div>
+              <p>Les principaux lobbys français et européens s'opposent fermement à une interdiction globale des PFAS pour préserver l'emploi, la compétitivité et la souveraineté industrielle. Ils défendent une approche au cas par cas avec des exemptions ciblées.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Économique, compétitivité</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.05s">
+              <div class="ac-icon ac-orange"><i class="fas fa-factory"></i></div>
+              <h4>Arkema &amp; Daikin</h4>
+              <div class="ac-role">Grands Groupes Producteurs de PFAS</div>
+              <p>Ces groupes s'opposent à une interdiction totale, mettant en avant l'absence d'alternatives viables à court terme. Leurs matériaux sont essentiels pour des technologies clés (batteries, semi-conducteurs, énergie renouvelable).</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Économique, innovation industrielle</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.10s">
+              <div class="ac-icon ac-yellow"><i class="fas fa-utensils"></i></div>
+              <h4>Groupe SEB (Tefal)</h4>
+              <div class="ac-role">Entreprise Grand Public</div>
+              <p>Il défend l'utilisation du PTFE (Téflon) dans les ustensiles de cuisine, affirmant que cette substance est stable, inerte et sans danger dans les conditions normales d'utilisation. A obtenu l'exclusion des ustensiles de cuisine de la loi française 2024.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Économique, protection de l'emploi</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.15s">
+              <div class="ac-icon ac-gray"><i class="fas fa-car"></i></div>
+              <h4>Industries Utilisatrices</h4>
+              <div class="ac-role">Automobile, Électronique, Énergie</div>
+              <p>Ces secteurs exercent un lobbying indirect en raison de leur dépendance aux PFAS. Ils alertent sur les risques de perte de compétitivité et de dépendance à des pays étrangers (notamment la Chine) en cas de réglementation trop stricte.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Innovation, transition écologique</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.20s">
+              <div class="ac-icon ac-blue"><i class="fas fa-landmark"></i></div>
+              <h4>Gouvernement (Position Prudente)</h4>
+              <div class="ac-role">Pouvoirs Publics</div>
+              <p>Soumis à des pressions de lobbying importantes, les pouvoirs publics adoptent une position intermédiaire cherchant à concilier enjeux sanitaires et économiques. Ils privilégient une régulation progressive et négociée.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Équilibre sanitaire/économique</div>
+            </article>
+            <article class="actor-card glass-card reveal-up" style="--d:0.25s">
+              <div class="ac-icon ac-green"><i class="fas fa-hard-hat"></i></div>
+              <h4>Syndicats et Travailleurs</h4>
+              <div class="ac-role">CGT, CFDT — Secteurs Chimiques</div>
+              <p>Les syndicats défendent les emplois dans les industries liées aux PFAS. Ils soutiennent une transition progressive pour éviter des licenciements massifs et la fermeture de sites de production en France et en Europe.</p>
+              <div class="ac-enjeu"><b>Enjeu :</b> Emploi, protection sociale</div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ARGUMENTS POUR ===================== -->
+  <section id="arguments-pour" class="section section-alt" aria-labelledby="ap-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag sec-tag-green">Arguments Pour</div>
+        <h2 id="ap-h" class="sec-title">Pour une Réglementation Stricte</h2>
+        <div class="sec-line sec-line-green"></div>
+        <p class="sec-desc">Les arguments en faveur d'une interdiction ou d'une réglementation stricte des PFAS.</p>
+      </header>
+
+      <div class="args-grid">
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.00s">
+          <div class="arg-num">01</div>
+          <div class="arg-ico"><i class="fas fa-heart-pulse"></i></div>
+          <h4>Santé Publique</h4>
+          <p>Des ONG et agences sanitaires documentent des liens entre PFAS et cancers, troubles hormonaux et effets sur le système immunitaire. Le risque est suffisant pour justifier une action rapide afin de protéger la population.</p>
+          <div class="arg-src">Porteurs : ONG, ANSES, CIRC</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.05s">
+          <div class="arg-num">02</div>
+          <div class="arg-ico"><i class="fas fa-infinity"></i></div>
+          <h4>Persistance Environnementale</h4>
+          <p>Les PFAS s'accumulent progressivement dans les sols, l'eau et les organismes vivants et ne se dégradent pas. Plus on attend, plus la pollution devient irréversible et difficile à gérer pour les générations futures.</p>
+          <div class="arg-src">Porteurs : ECHA, ONG environnementales</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.10s">
+          <div class="arg-num">03</div>
+          <div class="arg-ico"><i class="fas fa-globe"></i></div>
+          <h4>Contamination Généralisée</h4>
+          <p>97% des Européens ont des traces de PFAS dans le sang. Les PFAS sont présents dans l'eau potable, les sols et le corps humain. Toute la population est exposée, souvent sans le savoir — enjeu global nécessitant une réponse forte.</p>
+          <div class="arg-src">Porteurs : ANSES, chercheurs, AEE</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.15s">
+          <div class="arg-num">04</div>
+          <div class="arg-ico"><i class="fas fa-shield-alt"></i></div>
+          <h4>Principe de Précaution</h4>
+          <p>Il faut agir même en l'absence de certitude scientifique totale, dès lors qu'un risque potentiel grave est identifié. L'incertitude scientifique ne doit pas être un frein mais une raison supplémentaire d'agir rapidement.</p>
+          <div class="arg-src">Porteurs : ONG, décideurs politiques</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.20s">
+          <div class="arg-num">05</div>
+          <div class="arg-ico"><i class="fas fa-exchange-alt"></i></div>
+          <h4>Substitution Regrettable</h4>
+          <p>L'ECHA met en avant le phénomène où une molécule interdite est remplacée par une autre similaire mais tout aussi dangereuse. Cela justifie une interdiction globale de toute la famille des PFAS plutôt qu'une régulation au cas par cas.</p>
+          <div class="arg-src">Porteurs : ECHA, États européens</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.25s">
+          <div class="arg-num">06</div>
+          <div class="arg-ico"><i class="fas fa-euro-sign"></i></div>
+          <h4>Coût de la Dépollution</h4>
+          <p>La dépollution des PFAS est extrêmement coûteuse. Ce sont souvent les citoyens qui financent le traitement de l'eau contaminée. Cela renforce la nécessité d'agir en amont et d'appliquer le principe pollueur-payeur.</p>
+          <div class="arg-src">Porteurs : Collectivités, services publics</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.30s">
+          <div class="arg-num">07</div>
+          <div class="arg-ico"><i class="fas fa-balance-scale"></i></div>
+          <h4>Justice Environnementale</h4>
+          <p>Les populations vivant à proximité des sites industriels sont les plus exposées. Les ONG et élus locaux dénoncent une inégalité face aux risques environnementaux et sanitaires. Il faut protéger en priorité les populations vulnérables.</p>
+          <div class="arg-src">Porteurs : ONG, élus locaux, citoyens</div>
+        </article>
+        <article class="arg-card arg-green glass-card reveal-up" style="--d:0.35s">
+          <div class="arg-num">08</div>
+          <div class="arg-ico"><i class="fas fa-baby"></i></div>
+          <h4>Générations Futures</h4>
+          <p>Les PFAS restant très longtemps dans l'environnement, leurs effets peuvent se faire sentir sur plusieurs générations. Cet argument souligne la responsabilité actuelle de limiter leur utilisation pour protéger l'avenir.</p>
+          <div class="arg-src">Porteurs : Scientifiques, ONG, institutions</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ARGUMENTS CONTRE ===================== -->
+  <section id="arguments-contre" class="section" aria-labelledby="ac-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag sec-tag-red">Arguments Contre</div>
+        <h2 id="ac-h" class="sec-title">Pour les Exemptions et Usages Essentiels</h2>
+        <div class="sec-line sec-line-red"></div>
+        <p class="sec-desc">Les arguments défendant le maintien des PFAS dans certains usages jugés essentiels.</p>
+      </header>
+
+      <div class="args-grid">
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.00s">
+          <div class="arg-num">01</div>
+          <div class="arg-ico"><i class="fas fa-briefcase"></i></div>
+          <h4>Économie et Emploi</h4>
+          <p>Les industriels (France Chimie, CEFIC) et syndicats défendent l'idée qu'une interdiction aurait un impact économique majeur : pertes d'emplois, fermetures d'usines, délocalisations. Ces substances sont au cœur de nombreux secteurs industriels.</p>
+          <div class="arg-src">Porteurs : France Chimie, CEFIC, syndicats</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.05s">
+          <div class="arg-num">02</div>
+          <div class="arg-ico"><i class="fas fa-microchip"></i></div>
+          <h4>Technologies Essentielles</h4>
+          <p>Arkema et Daikin affirment que les PFAS sont indispensables aux technologies de la transition écologique : batteries, hydrogène vert, électronique, semi-conducteurs. Les interdire pourrait ralentir l'innovation et freiner les solutions écologiques.</p>
+          <div class="arg-src">Porteurs : Arkema, Daikin, industries tech</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.10s">
+          <div class="arg-num">03</div>
+          <div class="arg-ico"><i class="fas fa-search-minus"></i></div>
+          <h4>Absence d'Alternatives</h4>
+          <p>Il n'existe pas encore d'alternatives fiables et performantes aux PFAS pour certains usages. Les substituts actuels sont souvent moins efficaces ou encore en développement. Une interdiction immédiate serait difficilement applicable industriellement.</p>
+          <div class="arg-src">Porteurs : Industriels, gouvernements</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.15s">
+          <div class="arg-num">04</div>
+          <div class="arg-ico"><i class="fas fa-sitemap"></i></div>
+          <h4>Réglementation au Cas par Cas</h4>
+          <p>France Chimie et CEFIC défendent une approche ciblée plutôt qu'une interdiction globale. Tous les PFAS ne présentent pas le même niveau de dangerosité. Une réglementation ciblée serait plus juste et plus efficace.</p>
+          <div class="arg-src">Porteurs : France Chimie, CEFIC, industrie</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.20s">
+          <div class="arg-num">05</div>
+          <div class="arg-ico"><i class="fas fa-utensils"></i></div>
+          <h4>Innocuité de Certains PFAS</h4>
+          <p>Le Groupe SEB (Tefal) défend que le PTFE est stable, inerte et sans danger dans les conditions normales d'utilisation. Il faut distinguer les différents PFAS et éviter une interdiction globale qui ne prendrait pas compte de ces différences fondamentales.</p>
+          <div class="arg-src">Porteurs : Groupe SEB (Tefal)</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.25s">
+          <div class="arg-num">06</div>
+          <div class="arg-ico"><i class="fas fa-globe-americas"></i></div>
+          <h4>Compétitivité Internationale</h4>
+          <p>Une réglementation trop stricte en Europe pourrait désavantager les entreprises face à des pays moins réglementés (Chine, USA). Cela entraînerait une perte de compétitivité et une dépendance à des produits importés dans des secteurs stratégiques.</p>
+          <div class="arg-src">Porteurs : Industriels, gouvernements</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.30s">
+          <div class="arg-num">07</div>
+          <div class="arg-ico"><i class="fas fa-flag"></i></div>
+          <h4>Souveraineté Industrielle</h4>
+          <p>Les acteurs industriels affirment que les PFAS sont essentiels pour maintenir une production industrielle souveraine en Europe. Une interdiction pourrait fragiliser des secteurs stratégiques comme l'énergie ou les technologies avancées.</p>
+          <div class="arg-src">Porteurs : Industries stratégiques, gouvernements</div>
+        </article>
+        <article class="arg-card arg-red glass-card reveal-up" style="--d:0.35s">
+          <div class="arg-num">08</div>
+          <div class="arg-ico"><i class="fas fa-route"></i></div>
+          <h4>Transition Progressive</h4>
+          <p>Les gouvernements et certains industriels défendent une approche progressive plutôt qu'une interdiction immédiate. Il faut laisser le temps de développer des alternatives et d'adapter les industries pour éviter un choc économique et social trop brutal.</p>
+          <div class="arg-src">Porteurs : Gouvernements, industriels modérés</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DONNÉES ===================== -->
+  <section id="donnees" class="section section-alt" aria-labelledby="data-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Données &amp; Chiffres</div>
+        <h2 id="data-h" class="sec-title">Les Faits en Chiffres</h2>
+        <div class="sec-line"></div>
+      </header>
+
+      <div class="data-grid">
+        <div class="data-card glass-card reveal-up" style="--d:0.00s">
+          <div class="dc-icon"><i class="fas fa-flask"></i></div>
+          <div class="dc-val"><span class="counter" data-to="10000">10 000</span><span>+</span></div>
+          <div class="dc-label">Substances PFAS identifiées dans la famille chimique</div>
+        </div>
+        <div class="data-card glass-card reveal-up" style="--d:0.10s">
+          <div class="dc-icon"><i class="fas fa-users"></i></div>
+          <div class="dc-val"><span class="counter" data-to="97">97</span><span>%</span></div>
+          <div class="dc-label">des Européens ont des traces de PFAS dans leur sang (AEE, 2023)</div>
+        </div>
+        <div class="data-card glass-card reveal-up" style="--d:0.20s">
+          <div class="dc-icon"><i class="fas fa-industry"></i></div>
+          <div class="dc-val"><span class="counter" data-to="70">70</span><span>+</span></div>
+          <div class="dc-label">années d'utilisation industrielle intensive depuis les années 1950</div>
+        </div>
+        <div class="data-card glass-card reveal-up" style="--d:0.30s">
+          <div class="dc-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div class="dc-val"><span class="counter" data-to="5000">5 000</span><span>+</span></div>
+          <div class="dc-label">sites contaminés aux PFAS recensés en Europe</div>
+        </div>
+        <div class="data-card glass-card reveal-up" style="--d:0.40s">
+          <div class="dc-icon"><i class="fas fa-hourglass-half"></i></div>
+          <div class="dc-val"><span class="counter" data-to="1000">1 000</span><span>+</span></div>
+          <div class="dc-label">Durée estimée de persistance des PFAS dans l'environnement</div>
+        </div>
+        <div class="data-card glass-card reveal-up" style="--d:0.50s">
+          <div class="dc-icon"><i class="fas fa-gavel"></i></div>
+          <div class="dc-val">2023</div>
+          <div class="dc-label">Proposition d'interdiction globale de tous les PFAS au niveau européen (ECHA)</div>
+        </div>
+      </div>
+
+      <div class="events-section reveal-up" style="--d:0.2s">
+        <h3>Événements Clés en France</h3>
+        <div class="events-list">
+          <div class="ev-item">
+            <div class="ev-date">Mai 2022</div>
+            <div class="ev-content">
+              <h4>Révélation de la Vallée de la Chimie</h4>
+              <p>Enquêtes journalistiques révélant une contamination importante autour de la vallée de la chimie près de Lyon, liée aux sites industriels (Arkema). Prise de conscience nationale, plaintes d'élus et actions en justice des ONG.</p>
+            </div>
+          </div>
+          <div class="ev-item">
+            <div class="ev-date">2022–2023</div>
+            <div class="ev-content">
+              <h4>Confirmations sanitaires</h4>
+              <p>L'ANSES confirme l'ampleur de la pollution. Des mesures concrètes sont prises localement : interdiction de consommer certains aliments ou eaux contaminées dans plusieurs zones touchées de France.</p>
+            </div>
+          </div>
+          <div class="ev-item">
+            <div class="ev-date">Novembre 2023</div>
+            <div class="ev-content">
+              <h4>Classification cancérogène par le CIRC</h4>
+              <p>Le Centre International de Recherche sur le Cancer classe certains PFAS comme cancérogènes, renforçant encore la pression internationale pour une interdiction. Tournant scientifique majeur.</p>
+            </div>
+          </div>
+          <div class="ev-item">
+            <div class="ev-date">2024</div>
+            <div class="ev-content">
+              <h4>Loi française sur les PFAS</h4>
+              <p>La France adopte une loi visant à restreindre certains usages des PFAS, mais avec des compromis importants sous la pression des industriels, notamment l'exclusion des ustensiles de cuisine du périmètre de la loi.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BILAN ===================== -->
+  <section id="bilan" class="section" aria-labelledby="bilan-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Analyse Critique</div>
+        <h2 id="bilan-h" class="sec-title">Bilan de la Controverse</h2>
+        <div class="sec-line"></div>
+      </header>
+
+      <div class="bilan-quote reveal-up">
+        <blockquote>
+          <i class="fas fa-quote-left bq-icon"></i>
+          <p>Le débat autour de la régulation des PFAS dépasse largement la simple querelle d'experts ou le jargon administratif : il pose une question fondamentale sur le modèle de société que nous souhaitons bâtir et sur notre rapport au risque.</p>
+        </blockquote>
+      </div>
+
+      <div class="bilan-grid">
+        <article class="bilan-card glass-card reveal-up" style="--d:0.00s">
+          <div class="bl-icon"><i class="fas fa-exclamation-triangle"></i></div>
+          <h4>L'Impasse Réglementaire</h4>
+          <p>L'approche traditionnelle d'évaluation molécule par molécule a clairement montré ses limites. Elle nous condamne à l'effet « Whack-a-mole » : une substance toxique retirée du marché est presque aussitôt remplacée par un substitut dont on découvrira la nocivité quelques années plus tard.</p>
+        </article>
+        <article class="bilan-card glass-card reveal-up" style="--d:0.10s">
+          <div class="bl-icon"><i class="fas fa-sync-alt"></i></div>
+          <h4>Un Changement de Paradigme</h4>
+          <p>La proposition d'une restriction universelle en 2023 ne relève plus de la simple prudence, mais d'une véritable urgence sanitaire et environnementale fondée sur la persistance absolue de ces composés. C'est un tournant historique dans la régulation chimique européenne.</p>
+        </article>
+        <article class="bilan-card glass-card reveal-up" style="--d:0.20s">
+          <div class="bl-icon"><i class="fas fa-cogs"></i></div>
+          <h4>La Réalité Économique</h4>
+          <p>Cette volonté de principe de précaution strict se heurte à une réalité économique complexe. Les PFAS se sont immiscés dans tous les rouages de notre industrie, des biens de consommation courante aux technologies de pointe essentielles pour la transition écologique ou le secteur médical.</p>
+        </article>
+        <article class="bilan-card glass-card reveal-up" style="--d:0.30s">
+          <div class="bl-icon"><i class="fas fa-seedling"></i></div>
+          <h4>Le Défi de la Décennie</h4>
+          <p>La controverse ne se résout pas par une opposition binaire entre santé publique et industrie. L'enjeu véritable est d'orchestrer un sevrage industriel inédit : accompagner les entreprises vers des alternatives durables tout en protégeant durablement les écosystèmes et les citoyens.</p>
+        </article>
+      </div>
+
+      <div class="conclusion-box reveal-up" style="--d:0.4s">
+        <h3><i class="fas fa-flag-checkered"></i>&nbsp;Conclusion Générale</h3>
+        <p>Le défi de la prochaine décennie sera de prouver qu'il est possible de concilier innovation technologique et respect absolu du vivant. Il ne s'agit plus seulement de réparer les erreurs chimiques du passé, mais d'avoir le courage politique d'accompagner les entreprises vers des alternatives durables, tout en protégeant durablement les écosystèmes et les citoyens.</p>
+        <p>La décision finale dépend désormais en grande partie des choix réglementaires à l'échelle européenne — et de notre capacité collective à dépasser les intérêts sectoriels pour construire un avenir plus sûr pour tous.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BIBLIOGRAPHIE ===================== -->
+  <section id="bibliographie" class="section section-alt" aria-labelledby="bib-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">Sources</div>
+        <h2 id="bib-h" class="sec-title">Bibliographie &amp; Sources</h2>
+        <div class="sec-line"></div>
+      </header>
+
+      <div class="biblio-grid">
+        <div class="bib-card glass-card reveal-up">
+          <div class="bib-type"><i class="fas fa-university"></i>&nbsp;Institutions Officielles</div>
+          <ul>
+            <li><i class="fas fa-angle-right"></i> ANSES — Agence nationale de sécurité sanitaire de l'alimentation, de l'environnement et du travail</li>
+            <li><i class="fas fa-angle-right"></i> ECHA — Agence européenne des produits chimiques, Rapports sur les PFAS (2023)</li>
+            <li><i class="fas fa-angle-right"></i> CIRC/IARC — Centre International de Recherche sur le Cancer, Classification PFAS (nov. 2023)</li>
+            <li><i class="fas fa-angle-right"></i> AEE — Agence Européenne pour l'Environnement, données sur la contamination</li>
+            <li><i class="fas fa-angle-right"></i> Ministère de la Transition Écologique — données contamination PFAS en France</li>
+          </ul>
+        </div>
+        <div class="bib-card glass-card reveal-up" style="--d:0.1s">
+          <div class="bib-type"><i class="fas fa-newspaper"></i>&nbsp;Enquêtes &amp; Médias</div>
+          <ul>
+            <li><i class="fas fa-angle-right"></i> Enquêtes journalistiques (mai 2022) — Vallée de la Chimie, Lyon</li>
+            <li><i class="fas fa-angle-right"></i> Générations Futures — rapports et études sur les PFAS en France</li>
+            <li><i class="fas fa-angle-right"></i> Notre Affaire à Tous — dossiers juridiques et environnementaux</li>
+            <li><i class="fas fa-angle-right"></i> Le Monde, Libération — articles d'investigation sur la contamination</li>
+            <li><i class="fas fa-angle-right"></i> Affaire DuPont — Rob Bilott, action en justice États-Unis (1998–2005)</li>
+          </ul>
+        </div>
+        <div class="bib-card glass-card reveal-up" style="--d:0.2s">
+          <div class="bib-type"><i class="fas fa-industry"></i>&nbsp;Sources Industrielles</div>
+          <ul>
+            <li><i class="fas fa-angle-right"></i> France Chimie — positions et rapports sectoriels sur les PFAS</li>
+            <li><i class="fas fa-angle-right"></i> CEFIC — European Chemical Industry Council, publications réglementaires</li>
+            <li><i class="fas fa-angle-right"></i> ZVEI — Discussion Paper : Technological Sovereignty and European Competences (oct. 2020)</li>
+            <li><i class="fas fa-angle-right"></i> FMI — données sur l'emploi industriel mondial</li>
+          </ul>
+        </div>
+        <div class="bib-card glass-card reveal-up" style="--d:0.3s">
+          <div class="bib-type"><i class="fas fa-file-contract"></i>&nbsp;Textes Réglementaires</div>
+          <ul>
+            <li><i class="fas fa-angle-right"></i> Convention de Stockholm (2009) — restriction du PFOS au niveau international</li>
+            <li><i class="fas fa-angle-right"></i> Règlement REACH (UE) — encadrement des substances chimiques</li>
+            <li><i class="fas fa-angle-right"></i> Proposition d'interdiction globale des PFAS (ECHA, 2023)</li>
+            <li><i class="fas fa-angle-right"></i> Loi française sur les PFAS (2024) — usages et restrictions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ÉQUIPE ===================== -->
+  <section id="equipe" class="section" aria-labelledby="eq-h">
+    <div class="container">
+      <header class="sec-header reveal-up">
+        <div class="sec-tag">L'Équipe</div>
+        <h2 id="eq-h" class="sec-title">Les Totally Spies</h2>
+        <div class="sec-line"></div>
+        <p class="sec-desc">Étudiants en première année à l'ESIEE Paris — Promotion 2024–2025</p>
+      </header>
+
+      <div class="team-grid">
+        <article class="team-card glass-card abandoned-card reveal-up" style="--d:0.0s">
+          <div class="tc-abandoned-badge"><i class="fas fa-user-slash"></i>&nbsp;A abandonné le projet</div>
+          <div class="tc-avatar" style="--g1:#667eea;--g2:#764ba2">JR</div>
+          <h3>José Pedro</h3>
+          <div class="tc-nick">aka <em>"Rocinante"</em></div>
+          <div class="tc-role"><i class="fas fa-graduation-cap"></i>&nbsp;Étudiant ESIEE Paris</div>
+          <p>Quelqu'un de curieux, animé par une véritable passion pour le travail manuel. Malgré un talent discutable pour la conduite de kart, avec trois accidents à son actif. Toujours présent pour contribuer au projet avec enthousiasme et créativité.</p>
+          <div class="tc-tags">
+            <span>Travail manuel</span>
+            <span>Curiosité</span>
+            <span>🏎️ 3 accidents</span>
+          </div>
+        </article>
+
+        <article class="team-card glass-card featured-card reveal-up" style="--d:0.1s">
+          <div class="tc-featured-badge">Auteur principal</div>
+          <div class="tc-avatar" style="--g1:#C9841A;--g2:#E8A520">GD</div>
+          <h3>Gaspard Damame</h3>
+          <div class="tc-nick">anciennement <em>"Gaspacho"</em></div>
+          <div class="tc-role"><i class="fas fa-graduation-cap"></i>&nbsp;Étudiant ESIEE Paris</div>
+          <p>Il apprécie écouter de la musique, profiter avec ses amis, pratiquer du sport et faire la fête tout en sachant rester sérieux dans les moments qui le nécessitent. Il a souvent des pics de motivation et travaille beaucoup mais à certains moments seulement.</p>
+          <div class="tc-tags">
+            <span>Musique</span>
+            <span>Sport</span>
+            <span>⚡ Pics de motivation</span>
+          </div>
+        </article>
+
+        <article class="team-card glass-card featured-card reveal-up" style="--d:0.2s">
+          <div class="tc-featured-badge">Auteur principal</div>
+          <div class="tc-avatar" style="--g1:#11998e;--g2:#38ef7d">ID</div>
+          <h3>Ilyas Damiri</h3>
+          <div class="tc-nick">aka <em>"Illousha"</em></div>
+          <div class="tc-role"><i class="fas fa-graduation-cap"></i>&nbsp;Étudiant ESIEE Paris</div>
+          <p>Curieux… parfois un peu trop. Expert en électronique, mais seulement parce que son père l'a un peu forcé. Toujours partant pour comprendre tout ce qui clignote ou bip, il transforme chaque projet en mini-expérience explosive.</p>
+          <div class="tc-tags">
+            <span>Électronique</span>
+            <span>Curiosité</span>
+            <span>💥 Mini-explosions</span>
+          </div>
+        </article>
+      </div>
+
+      <div class="team-motto reveal-up" style="--d:0.3s">
+        <i class="fas fa-quote-left"></i>
+        <p>Un projet universitaire mené avec rigueur et esprit critique — analyser la controverse des PFAS nous a permis de comprendre que les grandes questions sociales dépassent toujours les simples oppositions binaires.</p>
+        <div class="tm-sig">— Les Totally Spies, ESIEE Paris 2024–2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer id="footer" role="contentinfo">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="fg-col">
+            <div class="fg-brand">PFAS :<br>Scandale ou Surmédia</div>
+            <p class="fg-desc">Projet de controverse scientifique réalisé dans le cadre du cours MSHL (Méthodes en Sciences Humaines et Littéraires) à l'ESIEE Paris — Semestre 2, 2024–2025.</p>
+            <div class="fg-logos">
+              <div class="flogo flogo-esiee">ESIEE<br><small>PARIS</small></div>
+              <div class="flogo flogo-uge">Université<br><small>Gustave Eiffel</small></div>
+            </div>
+          </div>
+
+          <div class="fg-col">
+            <h4>Navigation</h4>
+            <ul class="fg-links">
+              <li><a href="#accueil"><i class="fas fa-home"></i>&nbsp;Accueil</a></li>
+              <li><a href="#introduction"><i class="fas fa-info-circle"></i>&nbsp;Introduction</a></li>
+              <li><a href="#historique"><i class="fas fa-history"></i>&nbsp;Historique</a></li>
+              <li><a href="#acteurs"><i class="fas fa-users"></i>&nbsp;Acteurs</a></li>
+              <li><a href="#arguments-pour"><i class="fas fa-check"></i>&nbsp;Arguments Pour</a></li>
+              <li><a href="#arguments-contre"><i class="fas fa-times"></i>&nbsp;Arguments Contre</a></li>
+              <li><a href="#donnees"><i class="fas fa-chart-bar"></i>&nbsp;Données</a></li>
+              <li><a href="#bilan"><i class="fas fa-balance-scale"></i>&nbsp;Bilan</a></li>
+              <li><a href="#equipe"><i class="fas fa-user-friends"></i>&nbsp;Équipe</a></li>
+            </ul>
+          </div>
+
+          <div class="fg-col">
+            <h4>Liens Utiles</h4>
+            <ul class="fg-links">
+              <li><a href="https://www.controverses-esiee.fr" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i>&nbsp;controverses-esiee.fr</a></li>
+              <li><a href="https://www.esiee.fr" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i>&nbsp;ESIEE Paris</a></li>
+              <li><a href="https://www.univ-gustave-eiffel.fr" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i>&nbsp;Université Gustave Eiffel</a></li>
+              <li><a href="https://www.anses.fr" target="_blank" rel="noopener noreferrer"><i class="fas fa-flask"></i>&nbsp;ANSES</a></li>
+              <li><a href="https://echa.europa.eu" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe-europe"></i>&nbsp;ECHA Europe</a></li>
+              <li><a href="https://www.generations-futures.fr" target="_blank" rel="noopener noreferrer"><i class="fas fa-leaf"></i>&nbsp;Générations Futures</a></li>
+            </ul>
+          </div>
+
+          <div class="fg-col">
+            <h4>L'Équipe</h4>
+            <div class="fg-team">
+              <div class="fg-member">
+                <div class="fgm-av" style="--g1:#667eea;--g2:#764ba2">JR</div>
+                <div><div class="fgm-name">José Pedro "Rocinante"</div><div class="fgm-school">ESIEE Paris</div></div>
+              </div>
+              <div class="fg-member">
+                <div class="fgm-av" style="--g1:#C9841A;--g2:#E8A520">GD</div>
+                <div><div class="fgm-name">Gaspard Damame</div><div class="fgm-school">ESIEE Paris</div></div>
+              </div>
+              <div class="fg-member">
+                <div class="fgm-av" style="--g1:#11998e;--g2:#38ef7d">ID</div>
+                <div><div class="fgm-name">Ilyas Damiri</div><div class="fgm-school">ESIEE Paris</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="fb-inner">
+          <div class="fb-copy">
+            <p>© 2024–2025 Les Totally Spies — ESIEE Paris &amp; Université Gustave Eiffel</p>
+            <p>Projet MSHL — Méthodes en Sciences Humaines et Littéraires</p>
+          </div>
+          <div class="fb-site">
+            <span>Retrouvez ce projet sur</span>
+            <a href="https://www.controverses-esiee.fr" target="_blank" rel="noopener noreferrer">controverses-esiee.fr</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bouton retour en haut -->
+  <button id="backToTop" aria-label="Retour en haut de page">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
