@@ -52,15 +52,15 @@
   <!-- Navigation -->
   <nav id="navbar" role="navigation" aria-label="Navigation principale">
     <div class="nav-wrap">
+      <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"
+        onclick="(function(b){var m=document.getElementById('navLinks');var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));document.body.style.overflow=o?'hidden':'';})(this)">
+        <span></span><span></span><span></span>
+      </button>
       <a href="#accueil" class="nav-logo" aria-label="Accueil">
         <span class="nl-pfas">PFAS</span>
         <span class="nl-sep">|</span>
         <span class="nl-sub">Controverse</span>
       </a>
-      <button class="nav-burger" id="navBurger" aria-label="Ouvrir le menu" aria-expanded="false"
-        onclick="(function(b){var m=document.getElementById('navLinks');var o=m.classList.toggle('open');b.classList.toggle('open',o);b.setAttribute('aria-expanded',String(o));document.body.style.overflow=o?'hidden':'';})(this)">
-        <span></span><span></span><span></span>
-      </button>
       <ul class="nav-links" id="navLinks" role="menubar">
         <li role="none"><a href="#accueil"      class="nl active" role="menuitem"><i class="fas fa-home"></i>Accueil</a></li>
         <li role="none"><a href="#introduction" class="nl"        role="menuitem"><i class="fas fa-book-open"></i>Introduction</a></li>

@@ -236,19 +236,22 @@ body{-ms-overflow-style:none}
 }
 .subnav li a:hover{color:var(--gold);background:var(--glass)}
 
-/* Burger */
+/* Burger — caché sur desktop */
 .nav-burger{
-  display:none;flex-direction:column;
-  gap:5px;width:28px;padding:4px;
-  margin-left:auto;
+  display:none;
+  flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:5px;width:44px;height:44px;
+  flex-shrink:0;
 }
 .nav-burger span{
-  display:block;height:2px;background:var(--txt);
-  border-radius:2px;transition:transform .3s,opacity .3s;
+  display:block;width:20px;height:2px;
+  background:#E8ECF0;
+  border-radius:2px;transition:transform .3s,opacity .3s,background .3s;
 }
-.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-burger.open span:nth-child(2){opacity:0}
-.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);background:var(--gold)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);background:var(--gold)}
 
 /* ── Container ──────────────────────────────────────────────────── */
 .container{
@@ -1278,22 +1281,26 @@ blockquote{
     padding:0 16px;
     display:flex;
     align-items:center;
-    justify-content:space-between; /* logo gauche, burger droite */
+    gap:12px;
   }
+  /* Sur desktop le burger est avant le logo → on le remet après visuellement */
+  .nav-logo{ margin-right:auto; }
 
   /* ── Burger button ── */
   .nav-burger{
     display:flex !important;
+    order:-1; /* toujours en premier à gauche sur mobile */
     flex-direction:column;
     align-items:center;justify-content:center;
     gap:5px;
     width:44px;height:44px;
+    min-width:44px;
     background:rgba(201,132,26,.15);
-    border:1.5px solid rgba(201,132,26,.5) !important;
+    border:1.5px solid rgba(201,132,26,.55) !important;
     border-radius:10px;
     cursor:pointer;
     flex-shrink:0;
-    margin-left:auto;
+    margin-left:0;
     transition:background .2s,border-color .2s;
     z-index:1001;position:relative;
   }
