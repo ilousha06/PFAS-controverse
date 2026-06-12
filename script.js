@@ -328,7 +328,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 /* ────────────────────────────────────────────────────────────────
    8. BACK TO TOP
    ──────────────────────────────────────────────────────────────── */
-const btt = document.getElementById('backToTop');
+var btt = document.getElementById('backToTop');
 function toggleBackToTop() {
   if (!btt) return;
   btt.classList.toggle('visible', window.scrollY > 400);
