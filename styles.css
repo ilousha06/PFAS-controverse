@@ -1320,19 +1320,23 @@ blockquote{
   .nav-links{
     position:fixed;
     top:0;right:0;
-    width:88vw;max-width:360px;
+    width:min(88vw, 340px);
     height:100vh;
     background:rgba(6,10,18,.97);
     backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);
-    border-left:1px solid rgba(201,132,26,.18);
+    border-left:1px solid rgba(201,132,26,.25);
     flex-direction:column;
     align-items:flex-start;
     justify-content:center;
-    padding:100px 36px 60px;
+    /* padding: haut | DROITE (safe zone) | bas | gauche */
+    padding:100px 28px 60px 32px;
     gap:0;
     display:none;
     z-index:1000;
     animation:none;
+    overflow-y:auto;
+    overflow-x:hidden;
+    box-sizing:border-box;
   }
   .nav-links.open{
     display:flex !important;
@@ -1355,16 +1359,21 @@ blockquote{
 
   /* Items du menu */
   .nl{
-    font-size:1.25rem;font-weight:600;
-    padding:14px 0;
+    font-size:1.15rem;font-weight:600;
+    padding:13px 0;
     width:100%;
+    max-width:100%;
     color:rgba(220,225,235,.85);
     border-bottom:1px solid rgba(255,255,255,.06);
     display:flex;align-items:center;gap:10px;
     transition:color .2s,padding-left .2s;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    box-sizing:border-box;
   }
   .nl:hover,.nl.active{ color:var(--gold); padding-left:6px; }
-  .nl .fas{ width:18px;font-size:.9rem;color:var(--gold);opacity:.7; }
+  .nl .fas{ width:18px;flex-shrink:0;font-size:.9rem;color:var(--gold);opacity:.7; }
 
   /* Sous-menu — caché par défaut, visible au clic */
   .has-sub .subnav{
